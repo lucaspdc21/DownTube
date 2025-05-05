@@ -22,7 +22,7 @@ def download_selected_stream(yt, itag, output_dir="downloads"):
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
 
-    print(f"🔽 Baixando vídeo: {yt.title}...")
+    print(f"Baixando vídeo: {yt.title}...")
 
     # Download vídeo (apenas vídeo)
     video_stream = yt.streams.get_by_itag(itag)
@@ -30,7 +30,7 @@ def download_selected_stream(yt, itag, output_dir="downloads"):
     video_stream.download(output_path=output_dir, filename="video.mp4")
 
     # Baixar melhor áudio disponível (sem itag fixo)
-    print("🔊 Baixando áudio de melhor qualidade...")
+    print("Baixando áudio de melhor qualidade...")
     audio_stream = yt.streams.filter(only_audio=True).order_by('abr').desc().first()
     audio_path = os.path.join(output_dir, "audio.mp4")
     audio_stream.download(output_path=output_dir, filename="audio.mp4")
@@ -40,7 +40,7 @@ def download_selected_stream(yt, itag, output_dir="downloads"):
     output_path = os.path.join(output_dir, f"{safe_title}_final.mp4")
 
     # Combinar usando ffmpeg
-    print("🎬 Combinando vídeo e áudio com ffmpeg...")
+    print("Combinando vídeo e áudio com ffmpeg...")
     comando = [
         FFMPEG, '-y',
         '-i', video_path,
@@ -55,7 +55,7 @@ def download_selected_stream(yt, itag, output_dir="downloads"):
     # Remover arquivos temporários
     #os.remove(video_path)
     #os.remove(audio_path)
-    print(f"✅ Download finalizado: {output_path}")
+    print(f"Download finalizado: {output_path}")
 
 def main():
     if len(sys.argv) < 2:
